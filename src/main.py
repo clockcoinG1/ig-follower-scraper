@@ -1,6 +1,7 @@
 import os
 import time
 import random
+import uuid
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -71,11 +72,11 @@ class InstagramScraper:
 
         return users
 
-    def save_followers(self, users, usr):
+    def save_followers(self, users):
         logger.info('Saving followers...')
-        with open('followers.txt', 'a') as file:
+        with open(f'{uuid.uuid4()}.followers.txt', 'a') as file:
             file.write('\n'.join(users) + "\n")
-            logger.info('[DONE] - Your followers are saved in followers.txt file!')
+            logger.info(f'[DONE] - Your followers are saved in: txt file!')
 
     def close(self):
         logger.info('[bye!]')
@@ -83,8 +84,8 @@ class InstagramScraper:
 
 
 def main():
-    PASSWORD = os.environ.get('PASSWORD') if os.environ.get('PASSWORD') else input('Password: ')
-    USERNAME = os.environ.get('USERNAME') if os.environ.get('USERNAME') else input('Username: ')
+    USERNAME = os.environ.get('USERNAME') if os.environ.get('USERNAME') else input('IG Username [leave blank if logged in]: ')
+    PASSWORD = os.environ.get('PASSWORD') if os.environ.get('PASSWORD') else input('IG Password: [leave blank if logged in]: ')
     scraper = InstagramScraper(USERNAME, PASSWORD)
     scraper.login()
 
@@ -92,7 +93,7 @@ def main():
     user_input = int(input('[Required] - How many followers do you want to scrape (60-500 recommended): '))
 
     followers = scraper.scrape_followers(usr, user_input)
-    scraper.save_followers(followers, )
+    scraper.save_followers(followers, usr)
     scraper.close()
 
 

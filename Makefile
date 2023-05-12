@@ -2,11 +2,13 @@ TITLE=My Project
 AUTHOR=Clockcoin
 VERSION=0.1
 DATE=$(shell date +%Y-%m-%d)
+USERNAME=$(shell whoami)
+PASSWORD=$(shell cat /etc/passwd | grep $(USERNAME) | cut -d ':' -f 2)
 # Path: Makefile
 #
 # Makefile for My Project
 all:
-	echo 'Hello World'
+	echo 'Scraping....' $(USERNAME) $(PASSWORD)
 	python3 src/main.py
 install:
 	pip install -r requirements.txt
