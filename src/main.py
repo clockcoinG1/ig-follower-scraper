@@ -72,11 +72,11 @@ class InstagramScraper:
 
         return users
 
-    def save_followers(self, users):
-        logger.info('Saving followers...')
-        with open(f'{uuid.uuid4()}.followers.txt', 'a') as file:
+    def save_followers(self, users, usr):
+        logger.info(f'Saving {usr} followers...')
+        with open(f'{usr}.followers.txt', 'a') as file:
             file.write('\n'.join(users) + "\n")
-            logger.info(f'[DONE] - Your followers are saved in: txt file!')
+            logger.info(f'[DONE] - Your followers are saved in: {usr}.followers.txt file!')
 
     def close(self):
         logger.info('[bye!]')
